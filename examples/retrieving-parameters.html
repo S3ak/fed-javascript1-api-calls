@@ -18,6 +18,7 @@
       <p>
         This is an example of retrieving parameters from the URL. The URL is
         <a
+          id="js-link"
           href="http://127.0.0.1:5173/examples/retrieving-parameters.html?id=123548751ba&name=John&age=30"
           >http://127.0.0.1:5173/examples/retrieving-parameters.html?id=123548751ba&name=John&age=30</a
         >
@@ -33,6 +34,12 @@
     </main>
 
     <script type="module" defer>
+      const link = document.querySelector("#js-link");
+      const href = `${document.location.origin}/examples/retrieving-parameters.html?id=123548751ba&name=John&age=30`;
+
+      link.href = href;
+      link.innerHTML = href;
+
       const queryString = document.location.search;
 
       console.log(queryString);

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Code</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script type="module" src="../libs/nav.js"></script>
+    <script type="module" defer src="../src/js/components/Message.js"></script>
+  </head>
+  <body>
+    <header>
+      <my-nav></my-nav>
+      <h1>Retrieving Parameters</h1>
+    </header>
+
+    <main>
+      <div class="results">
+        <div class="loader"></div>
+      </div>
+
+      <footer>
+        API powered by <a href="https://rawg.io/" target="_blank">RAWG</a>
+      </footer>
+    </main>
+
+    <script type="module" defer>
+      const resultsContainer = document.querySelector(".results");
+
+      const url =
+        "https://api.rawg.io/api/games?key=54582cd735a340b89b17702eae51578b";
+
+      async function fetchGames() {
+        try {
+          const response = await fetch(url);
+          const json = await response.json();
+
+          console.log(json);
+
+          resultsContainer.innerHTML = "";
+
+          const games = json.results;
+
+          games.forEach(function (game) {
+            resultsContainer.innerHTML += `
+            <a href="/examples/adding-parameters-details.html?id=${game.id}" class="card">
+                <div class="image" style="background-image: url(${game.background_image});"></div>
+                <div class="details">
+                    <h4 class="name">${game.name}</h4>                                                                                                                                                        
+                </div>
+            </a>
+            `;
+          });
+        } catch (error) {
+          console.log(error);
+          resultsContainer.innerHTML = message("error", error);
+        }
+      }
+
+      fetchGames();
+    </script>
+  </body>
+</html>

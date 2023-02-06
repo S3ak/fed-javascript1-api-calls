@@ -24,26 +24,34 @@ class Nav extends HTMLElement {
       <style>
         :host {
           display: block;
-          background: #eee;
           padding: 10px;
         }
 
         .is-active {
           color: green;
         }
+
+        nav {
+          display: flex;
+          gap: 2.5em;
+          flex-wrap: wrap;
+        }
+
+        nav a {
+          min-height: 34px;
+        }
       </style>
 
       <nav>
         <a href="/">Home</a>
         <a href="/examples.html">Examples</a>
-        <a href="/examples/length-trim.html">Length & trim</a>
-        <a href="/examples/addeventlistener.html">addeventlistener</a>
-        <a href="/examples/onkeyup-event.html">On key up event</a>
-        <a href="/examples/event-bubbling.html">Event bubbling</a>
-        <a href="/examples/data-attributes.html">data-attributes</a>
-        <a href="/examples/event-loop.html">Event loop</a>
-        <a href="/examples/mouse-events.html">Mouse Events</a>
-        <a href="/examples/scroll-event.html">Scroll Event</a>
+        <a href="/examples/retrieving-parameters.html">retrieving-parameters</a>
+        <a href="/examples/adding-parameters-list.html">adding-parameters-list</a>
+        <a href="/examples/adding-parameters-details.html">adding-parameters-details</a>
+        <a href="/examples/reusable-html-function.html">reusable-html-function</a>
+        <a href="/examples/get-requests-handling-errors.html">get-requests-handling-errors</a>
+        <a href="/examples/try-catch-finally.html">try-catch-finally</a>
+        <a href="/examples/then-catch.html">then-catch</a>
       <nav>
     `;
 

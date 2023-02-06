@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Code</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script type="module" src="../libs/nav.js"></script>
+  </head>
+  <body>
+    <header>
+      <my-nav></my-nav>
+      <h1>Retrieving Parameters</h1>
+    </header>
+
+    <main>
+      <p>
+        This is an example of retrieving parameters from the URL. The URL is
+        <a
+          href="http://127.0.0.1:5173/examples/retrieving-parameters.html?id=123548751ba&name=John&age=30"
+          >http://127.0.0.1:5173/examples/retrieving-parameters.html?id=123548751ba&name=John&age=30</a
+        >
+      </p>
+      <p>
+        The name is
+        <span id="name"></span>
+      </p>
+      <p>
+        The age is
+        <span id="age"></span>
+      </p>
+    </main>
+
+    <script type="module" defer>
+      const queryString = document.location.search;
+
+      console.log(queryString);
+
+      const params = new URLSearchParams(queryString);
+
+      console.log("params >>>", params);
+
+      const id = params.get("id");
+
+      console.log("id >>>", id);
+
+      const name = params.get("name");
+
+      console.log("name >>>", name);
+
+      document.querySelector("#name").innerHTML = name;
+      document.querySelector("#age").innerHTML = params.get("age");
+
+      const paramsString = "q=URLUtils.searchParams&topic=api";
+      const searchParams = new URLSearchParams(paramsString);
+
+      // Iterating the search parameters
+      for (const p of searchParams) {
+        console.log("looped param iterator >>>", p);
+      }
+    </script>
+  </body>
+</html>

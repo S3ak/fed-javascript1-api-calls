@@ -1,20 +1,3 @@
-const navList = [
-  {
-    label: "Home",
-    path: "/",
-  },
-  {
-    label: "Home",
-    path: "/examples.html",
-    items: [
-      {
-        label: "Example 1",
-        path: "/length-trim.html",
-      },
-    ],
-  },
-];
-
 class Nav extends HTMLElement {
   constructor() {
     super();
@@ -67,6 +50,8 @@ class Nav extends HTMLElement {
           <a href="/examples/get-requests-handling-errors.html">get-requests-handling-errors</a>
           <a href="/examples/try-catch-finally.html">try-catch-finally</a>
           <a href="/examples/then-catch.html">then-catch</a>
+          <a href="/examples/postman.html">postman</a>
+          <a href="/examples/break.html">Skipping results</a>
         </nav>
       </details>
     `;

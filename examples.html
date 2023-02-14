@@ -12,6 +12,45 @@
     <header>
       <my-nav></my-nav>
     </header>
-    <main>Example code</main>
+    <main><div id="js-results"></div></main>
   </body>
+  <script type="module" defer>
+    const resultsContainer = document.querySelector("#js-results");
+    const url =
+      "https://api.rawg.io/api/games?key=54582cd735a340b89b17702eae51578b";
+
+    async function fetchGames() {
+      try {
+        const response = await fetch(url);
+        const json = await response.json();
+
+        console.log(json);
+
+        resultsContainer.innerHTML = "";
+
+        const games = json.results;
+
+        for (let i = 0; i < games.length; i++) {
+          const game = games[i];
+
+          if (game.rating > 4) {
+            return;
+          }
+
+          resultsContainer.innerHTML += `
+          <div class="card">
+            <div class="image" style="background-image: url(${game.background_image});"></div>
+            <div class="details">
+              <h4 class="name">${game.name}</h4>
+              <p>Rating: <strong>${game.rating}</strong></p>
+            </div>
+          `;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchGames();
+  </script>
 </html>

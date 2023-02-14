@@ -42,7 +42,7 @@
           const games = json.results;
 
           for (let i = 0; i < games.length; i++) {
-            if (games[i].rating < 4) {
+            if (games[i].rating > 4) {
               continue;
             }
 

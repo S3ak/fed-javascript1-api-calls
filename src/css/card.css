@@ -14,6 +14,10 @@
   color: white !important;
 }
 
+.card .details {
+  color: var(--grey);
+}
+
 .card a.details:hover {
   background-color: var(--light-grey) !important;
   color: var(--grey) !important;

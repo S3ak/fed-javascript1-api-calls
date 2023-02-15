@@ -52,6 +52,10 @@ class Nav extends HTMLElement {
           <a href="/examples/then-catch.html">then-catch</a>
           <a href="/examples/postman.html">postman</a>
           <a href="/examples/break.html">Skipping results</a>
+          <a href="/examples/filter.html">Filtering</a>
+          <a href="/examples/search.html">Searching</a>
+          <a href="/examples/search-form.html">Search & Filter</a>
+          <a href="/examples/games.html">Final Games UX</a>
         </nav>
       </details>
     `;

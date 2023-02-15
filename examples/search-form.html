@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example Code</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script type="module" src="../libs/nav.js"></script>
+  </head>
+  <body>
+    <header>
+      <my-nav></my-nav>
+      <h1>Search Form</h1>
+    </header>
+
+    <main>
+      <section>
+        <form id="js-search-form">
+          <fieldset class="fieldset">
+            <label for="search">Search</label>
+            <input type="search" id="js-search" name="search" />
+          </fieldset>
+
+          <details>
+            <summary>Filter</summary>
+
+            <fieldset class="fieldset">
+              <legend>Filter</legend>
+
+              <label for="min-rating">Minimum Rating</label>: 0
+              <input
+                type="range"
+                id="js-min-rating"
+                name="min-rating"
+                min="0"
+                max="5"
+              />
+              5
+              <br />
+              <button type="submit">Filter</button>
+            </fieldset>
+          </details>
+
+          <fieldset class="fieldset">
+            <label for="order-by">Order by:</label>
+
+            <select id="js-order-by" name="order-by">
+              <option value="name-ascending">Name A-Z</option>
+              <option value="name-descending">Name Z-A</option>
+            </select>
+            <br />
+          </fieldset>
+        </form>
+      </section>
+      <div class="results" id="js-results">
+        <div class="loader"></div>
+      </div>
+
+      <footer>
+        API powered by <a href="https://rawg.io/" target="_blank">RAWG</a>
+      </footer>
+    </main>
+
+    <script type="module" defer>
+      const resultsContainer = document.querySelector("#js-results");
+      const formEl = document.querySelector("#js-search-form");
+      const searchEl = document.querySelector("#js-search");
+      const minRatingEl = document.querySelector("#js-min-rating");
+      const orderByEl = document.querySelector("#js-order-by");
+
+      const url =
+        "https://api.rawg.io/api/games?key=54582cd735a340b89b17702eae51578b";
+
+      fetchGames();
+
+      formEl.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        fetchGames(searchEl.value, minRatingEl.value);
+      });
+
+      searchEl.addEventListener("keyup", function (event) {
+        fetchGames(searchEl.value);
+      });
+
+      searchEl.addEventListener("search", function (event) {
+        fetchGames(searchEl.value);
+      });
+
+      orderByEl.addEventListener("change", function (event) {
+        fetchGames(searchEl.value, minRatingEl.value);
+      });
+
+      async function fetchGames(searchValue = "", ratingValue = "") {
+        try {
+          resultsContainer.innerHTML = `<div class="loader"></div>`;
+
+          const response = await fetch(url);
+          const json = await response.json();
+
+          const games = json.results;
+
+          const filteredGames = games.filter((game) =>
+            filterGame(game, searchValue, ratingValue)
+          );
+
+          filteredGames.sort(function (a, b) {
+            const orderByValue = orderByEl.value;
+            if (orderByValue === "name-ascending") {
+              return a.name.localeCompare(b.name);
+            } else if (orderByValue === "name-descending") {
+              return b.name.localeCompare(a.name);
+            }
+          });
+
+          resultsContainer.innerHTML = ``;
+
+          filteredGames.forEach(function (game) {
+            resultsContainer.innerHTML += `
+            <a href="/examples/adding-parameters-details.html?id=${game.id}" class="card">
+                <div class="image" style="background-image: url(${game.background_image});"></div>
+                <div class="details">
+                    <h4 class="name">${game.name}</h4>
+                    <p>Rating: <strong>${game.rating}</strong></p>                                                                                                                                                        
+                </div>
+            </a>
+            `;
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      function filterGame(game, searchValue = "", ratingValue = null) {
+        const formattedSearchValue = searchValue.trim().toLowerCase();
+
+        if (ratingValue) {
+          return (
+            game.rating >= ratingValue &&
+            game.name.toLowerCase().includes(formattedSearchValue)
+          );
+        }
+
+        return game.name.toLowerCase().includes(searchValue);
+      }
+    </script>
+  </body>
+</html>

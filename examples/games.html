@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example Code</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script type="module" src="../libs/nav.js"></script>
+  </head>
+  <body>
+    <header>
+      <my-nav></my-nav>
+      <h1>Search Form</h1>
+    </header>
+
+    <main>
+      <section>
+        <form id="js-search-form">
+          <fieldset class="fieldset">
+            <label for="search">Search</label>
+            <input type="search" id="js-search" name="search" />
+          </fieldset>
+
+          <details>
+            <summary>Filter</summary>
+
+            <fieldset class="fieldset">
+              <legend>Filter</legend>
+
+              <label for="min-rating">Minimum Rating</label>: 0
+              <input
+                type="range"
+                id="js-min-rating"
+                name="min-rating"
+                min="0"
+                max="5"
+              />
+              5
+              <br />
+              <button type="submit">Filter</button>
+            </fieldset>
+          </details>
+
+          <fieldset class="fieldset">
+            <label for="order-by">Order by:</label>
+
+            <select id="js-order-by" name="order-by">
+              <option value="name-ascending">Name A-Z</option>
+              <option value="name-descending">Name Z-A</option>
+            </select>
+            <br />
+          </fieldset>
+        </form>
+      </section>
+      <div class="results" id="js-results">
+        <div class="loader"></div>
+      </div>
+
+      <footer>
+        API powered by <a href="https://rawg.io/" target="_blank">RAWG</a>
+      </footer>
+    </main>
+
+    <script type="module" defer>
+      const resultsContainer = document.querySelector("#js-results");
+      const formEl = document.querySelector("#js-search-form");
+      const searchEl = document.querySelector("#js-search");
+      const minRatingEl = document.querySelector("#js-min-rating");
+      const orderByEl = document.querySelector("#js-order-by");
+
+      const url =
+        "https://api.rawg.io/api/games?key=54582cd735a340b89b17702eae51578b";
+
+      let fetchedGames = [];
+      let games = JSON.parse(localStorage.getItem("fetchedGames"));
+
+      if (games) renderGames();
+
+      fetchGames();
+
+      formEl.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        games = filterGames(games, searchEl.value, minRatingEl.value);
+        renderGames();
+      });
+
+      searchEl.addEventListener("keyup", (event) => {
+        games = filterGames(fetchedGames, event.target.value);
+        renderGames();
+      });
+
+      searchEl.addEventListener("search", (event) => {
+        games = filterGames(fetchedGames, event.target.value);
+        renderGames();
+      });
+
+      orderByEl.addEventListener("change", (event) => {
+        games = sortGames(games, event.target.value);
+        renderGames();
+      });
+
+      async function fetchGames(searchValue = "", ratingValue = "") {
+        try {
+          if (!games) resultsContainer.innerHTML = `<div class="loader"></div>`;
+
+          const response = await fetch(url);
+          const { results } = await response.json();
+
+          const filteredGames = filterGames(results, searchValue, ratingValue);
+
+          fetchedGames = sortGames(filteredGames, orderByEl.value);
+          localStorage.setItem("fetchedGames", JSON.stringify(fetchedGames));
+          games = fetchedGames;
+
+          renderGames(games);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      function filterGames(
+        list = games ?? [],
+        searchValue = "",
+        ratingValue = null
+      ) {
+        if (!searchValue && !ratingValue) return list;
+
+        return list.filter(({ rating, name }) => {
+          const formattedSearchValue = searchValue.trim().toLowerCase();
+
+          if (ratingValue) {
+            return (
+              rating >= ratingValue &&
+              name.toLowerCase().includes(formattedSearchValue)
+            );
+          }
+
+          return name.toLowerCase().includes(formattedSearchValue);
+        });
+      }
+
+      function sortGames(list = games ?? [], orderByValue) {
+        return list.sort(function (a, b) {
+          if (orderByValue === "name-ascending") {
+            return a.name.localeCompare(b.name);
+          } else if (orderByValue === "name-descending") {
+            return b.name.localeCompare(a.name);
+          }
+        });
+      }
+
+      function renderGames(
+        list = games ?? [],
+        containerEl = resultsContainer ?? document.createElement("div")
+      ) {
+        containerEl.innerHTML = ``;
+
+        list.forEach(
+          ({
+            id = "",
+            background_image = "",
+            name = "",
+            rating = "",
+            clip,
+          }) => {
+            const image = clip?.clip ?? background_image;
+
+            containerEl.innerHTML += `
+                  <a href="/examples/adding-parameters-details.html?id=${id}" class="card">
+                      <div class="image" style="background-image: url(${image});"></div>
+                      <div class="details">
+                          <h4 class="name">${name}</h4>
+                          <p>Rating: <strong>${rating}</strong></p>
+                      </div>
+                  </a>
+                  `;
+          }
+        );
+      }
+    </script>
+  </body>
+</html>

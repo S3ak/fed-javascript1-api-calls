@@ -57,6 +57,13 @@ button:focus-visible {
   text-decoration: none;
 }
 
+.fieldset {
+  border: 0 solid transparent;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 0;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

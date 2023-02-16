@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example Code</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script type="module" src="../libs/nav.js"></script>
+  </head>
+  <body>
+    <header>
+      <my-nav></my-nav>
+      <h1>Regex</h1>
+      <h2>Do not edit this code</h2>
+    </header>
+
+    <main>
+      <p>Is the value truthy: <span id="js-value"></span></p>
+    </main>
+
+    <script type="module" defer>
+      const valueEl = document.querySelector("#js-value");
+
+      const stringToTest = "Oh hello there";
+      // the expression is placed between / /
+
+      const expression = /hello/;
+
+      const result = expression.test(stringToTest);
+
+      console.log("Did it pass >>>", result);
+    </script>
+  </body>
+</html>

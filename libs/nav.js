@@ -56,6 +56,10 @@ class Nav extends HTMLElement {
           <a href="/examples/search.html">Searching</a>
           <a href="/examples/search-form.html">Search & Filter</a>
           <a href="/examples/games.html">Final Games UX</a>
+          <a href="/examples/truthy-and-falsy.html">Truthy & falsy</a>
+          <a href="/examples/regex.html">Regular Expressions</a>
+          <a href="/examples/form.html">Forms</a>
+          <a href="/examples/advanced-form.html">Advanced Form</a>
         </nav>
       </details>
     `;

@@ -1,0 +1,44 @@
+.c-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  padding: 1rem 1rem;
+  gap: 0.5rem;
+}
+
+.c-form input {
+  min-height: 34px;
+  min-width: 200px;
+  width: 100%;
+  max-width: 800px;
+  border-radius: 0.3rem;
+}
+
+.c-form input:is(:hover, :active) {
+  border-color: rgb(60, 0, 255);
+}
+
+input.is-error {
+  border-color: rgb(255, 0, 0);
+}
+
+input.is-warning {
+  border-color: hsl(24, 100%, 50%);
+}
+
+input.is-success {
+  border-color: #00ff04;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 107px;
+  gap: 0.5rem;
+}

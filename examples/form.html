@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example Code</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script type="module" src="../libs/nav.js"></script>
+  </head>
+  <body>
+    <header>
+      <my-nav></my-nav>
+
+      <h1>Form with validation</h1>
+
+      <h2>Do not edit this code</h2>
+    </header>
+
+    <main>
+      <h3>My awesome form</h3>
+
+      <form class="c-form" id="js-form">
+        <div class="form-group">
+          <label for="js-name">Name</label>
+          <input type="text" id="js-name" required />
+          <p class="validation-container" id="js-name-message"></p>
+        </div>
+
+        <div class="form-group">
+          <label for="js-email">Email</label>
+          <input type="email" id="js-email" required />
+          <p class="validation-container" id="js-name-email"></p>
+        </div>
+
+        <div class="form-group">
+          <label for="js-password">Password</label>
+          <input type="password" id="js-password" required />
+          <p class="validation-container" id="js-name-password"></p>
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+    </main>
+
+    <script type="module" defer>
+      const formEl = document.querySelector("#js-form");
+      const nameEl = document.querySelector("#js-name");
+      const emailEl = document.querySelector("#js-email");
+      const passwordEl = document.querySelector("#js-password");
+
+      formEl.addEventListener("submit", (event) => {
+        // Stop the form from reloading the page
+        event.preventDefault();
+
+        const name = nameEl.value;
+        const email = emailEl.value;
+        const password = passwordEl.value;
+
+        if (name === "") {
+          alert("Please enter a name");
+          return;
+        }
+
+        if (email === "") {
+          alert("Please enter an email");
+          return;
+        }
+
+        if (password === "") {
+          alert("Please enter a password");
+          return;
+        }
+
+        // Submit the form to an API
+
+        alert("Form submitted");
+      });
+
+      nameEl.addEventListener("blur", (event) => {
+        const name = event.target.value.trim();
+
+        // Minmum 2 characters, must be letters only
+        const minLengthRegex = /^[a-zA-Z]{2,}/;
+
+        if (minLengthRegex.test(name)) {
+          event.target.classList.add("is-success");
+          event.target.classList.remove("is-error");
+        } else {
+          event.target.classList.add("is-error");
+          event.target.classList.remove("is-success");
+        }
+      });
+
+      emailEl.addEventListener("blur", (event) => {
+        const email = event.target.value.trim();
+
+        // Email Validation as per RFC2822 standards.
+        const emailRegex =
+          /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+
+        if (emailRegex.test(email)) {
+          event.target.classList.add("is-success");
+          event.target.classList.remove("is-error");
+        } else {
+          event.target.classList.add("is-error");
+          event.target.classList.remove("is-success");
+        }
+      });
+
+      passwordEl.addEventListener("blur", (event) => {
+        const name = event.target.value.trim();
+
+        // - at least 8 characters
+        // - must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number
+        // - Can contain special characters
+        const passwordRegex =
+          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
+        if (passwordRegex.test(name)) {
+          event.target.classList.add("is-success");
+          event.target.classList.remove("is-error");
+        } else {
+          event.target.classList.add("is-error");
+          event.target.classList.remove("is-success");
+        }
+      });
+    </script>
+  </body>
+</html>

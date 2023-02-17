@@ -20,22 +20,23 @@
     <main>
       <h3>My awesome form</h3>
 
-      <form class="c-form" id="js-form">
+      <form class="c-form" id="js-form" autocomplete="off">
         <div class="form-group">
           <label for="js-name">Name</label>
-          <input type="text" id="js-name" required />
-          <p class="validation-container" id="js-name-message"></p>
+          <input type="text" id="js-name" name="name" required />
+          <p class="validation-container is-hidden" id="js-name-message"></p>
         </div>
 
         <div class="form-group">
           <label for="js-email">Email</label>
-          <input type="email" id="js-email" required />
+          <input type="email" id="js-email" name="email" required />
           <p class="validation-container" id="js-name-email"></p>
         </div>
 
         <div class="form-group">
           <label for="js-password">Password</label>
-          <input type="password" id="js-password" required />
+          <input type="password" id="js-password" name="password" required />
+          <span>X</span>
           <p class="validation-container" id="js-name-password"></p>
         </div>
 
@@ -89,6 +90,9 @@
         } else {
           event.target.classList.add("is-error");
           event.target.classList.remove("is-success");
+          document.querySelector("#js-name-message").innerHTML =
+            "Name must be at least 2 characters long and must be letters only";
+          // document.querySelector("#js-name-message").classList.remove("is-hidden");
         }
       });
 
@@ -108,23 +112,23 @@
         }
       });
 
-      passwordEl.addEventListener("blur", (event) => {
-        const name = event.target.value.trim();
+      // passwordEl.addEventListener("blur", (event) => {
+      //   const name = event.target.value.trim();
 
-        // - at least 8 characters
-        // - must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number
-        // - Can contain special characters
-        const passwordRegex =
-          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+      //   // - at least 8 characters
+      //   // - must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number
+      //   // - Can contain special characters
+      //   const passwordRegex =
+      //     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
-        if (passwordRegex.test(name)) {
-          event.target.classList.add("is-success");
-          event.target.classList.remove("is-error");
-        } else {
-          event.target.classList.add("is-error");
-          event.target.classList.remove("is-success");
-        }
-      });
+      //   if (passwordRegex.test(name)) {
+      //     event.target.classList.add("is-success");
+      //     event.target.classList.remove("is-error");
+      //   } else {
+      //     event.target.classList.add("is-error");
+      //     event.target.classList.remove("is-success");
+      //   }
+      // });
     </script>
   </body>
 </html>
